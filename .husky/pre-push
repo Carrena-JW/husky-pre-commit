@@ -10,9 +10,6 @@ if [ "$current_branch" = "main" ]; then
   echo 'Building code'
   dotnet build --no-restore
 
-  echo 'Formatting code'
-  dotnet format
-
   echo 'Running tests'
   dotnet test --no-restore
 else

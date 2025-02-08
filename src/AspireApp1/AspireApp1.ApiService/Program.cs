@@ -30,7 +30,7 @@ app.MapGet("/weatherforecast", () =>
 app.MapDefaultEndpoints();
 
 app.Run();
- 
+
 // asdasdasdasd
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

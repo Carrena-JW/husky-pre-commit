@@ -5,13 +5,24 @@ current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "no-branch")
 
 git add .
 
-# main 브랜치에 커밋될 때만 실행
 if [ "$current_branch" = "main" ]; then
   echo 'Building code'
-  dotnet build --no-restore
+  if ! dotnet build; then
+    echo "Build failed. Aborting push."
+    exit 1
+  fi
+
+  echo 'Formatting code'
+  if ! dotnet format; then
+    echo "Code formatting failed. Aborting push."
+    exit 1
+  fi
 
   echo 'Running tests'
-  dotnet test --no-restore
+  if ! dotnet test; then
+    echo "Tests failed. Aborting push."
+    exit 1
+  fi
 else
-  echo 'Not on main branch, skipping build, format, and test steps.'
+  echo "Not pushing to main branch, skipping build, format, and test steps."
 fi

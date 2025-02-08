@@ -7,19 +7,19 @@ git add .
 
 if [ "$current_branch" = "main" ]; then
   echo 'Building code'
-  if ! dotnet build; then
+  if ! dotnet build --no-restore; then
     echo "Build failed. Aborting push."
     exit 1
   fi
 
   echo 'Formatting code'
-  if ! dotnet format; then
+  if ! dotnet format --no-restore; then
     echo "Code formatting failed. Aborting push."
     exit 1
   fi
 
   echo 'Running tests'
-  if ! dotnet test; then
+  if ! dotnet test --no-restore; then
     echo "Tests failed. Aborting push."
     exit 1
   fi

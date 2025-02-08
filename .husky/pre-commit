@@ -1,6 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "no-branch")
 
 # main 브랜치에 커밋될 때만 실행
 if [ "$current_branch" = "main" ]; then
@@ -14,4 +15,5 @@ if [ "$current_branch" = "main" ]; then
   dotnet test
 else
   echo 'Not on main branch, skipping build, format, and test steps.'
+  echo $current_branch
 fi

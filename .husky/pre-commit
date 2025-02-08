@@ -3,17 +3,18 @@
 
 current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "no-branch")
 
+git add .
+
 # main 브랜치에 커밋될 때만 실행
 if [ "$current_branch" = "main" ]; then
   echo 'Building code'
-  dotnet build
+  dotnet build --no-restore
 
   echo 'Formatting code'
   dotnet format
 
   echo 'Running tests'
-  dotnet test
+  dotnet test --no-restore
 else
   echo 'Not on main branch, skipping build, format, and test steps.'
-  echo $current_branch
 fi
